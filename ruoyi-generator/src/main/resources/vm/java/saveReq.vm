@@ -1,0 +1,12 @@
+package ${packageName}.req;
+import ${packageName}.model.${ClassName};
+
+/**
+ * @author ${author}
+ * @date ${datetime}
+ */
+
+@Data
+public class ${ClassName}SaveReq {
+
+}

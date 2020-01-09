@@ -1,0 +1,74 @@
+package ${packageName}.dao;
+
+import ${packageName}.model.${ClassName};
+import java.util.List;
+import ${packageName}.resp.${ClassName}Resp;
+import ${packageName}.req.${ClassName}Req;
+import com.regent.bp.common.dao.BaseDao;
+
+/**
+ * @Description: ${functionName}Dao接口
+ * 
+ * @author ${author}
+ * @date ${datetime}
+ */
+public interface ${ClassName}Dao  extends BaseDao<${ClassName}> {
+
+    /**
+     * @Description:查询${functionName}
+     * 
+     * @param ${pkColumn.javaField} ${functionName}ID
+     * @return ${functionName}
+     */
+    public ${ClassName} select${ClassName}ById(${pkColumn.javaType} ${pkColumn.javaField});
+
+    /**
+     * @Description:查询${functionName}列表
+     * 
+     * @param ${className} ${functionName}
+     * @return ${functionName}集合
+     */
+    public List<${ClassName}> select${ClassName}List(${ClassName} ${className});
+
+    /**
+     * @Description:新增${functionName}
+     * 
+     * @param ${className} ${functionName}
+     * @return 结果
+     */
+    public int insert${ClassName}(${ClassName} ${className});
+
+    /**
+     * @Description:修改${functionName}
+     * 
+     * @param ${className} ${functionName}
+     * @return 结果
+     */
+    public int update${ClassName}(${ClassName} ${className});
+
+    /**
+     *@Description: 删除${functionName}
+     * 
+     * @param ${pkColumn.javaField} ${functionName}ID
+     * @return 结果
+     */
+    public int delete${ClassName}ById(${pkColumn.javaType} ${pkColumn.javaField});
+    
+    
+    /**
+     * @Description:查询${functionName}总数量
+     * 
+     * @param ${className}Req ${className}Req
+     * @return 结果
+     */
+    public Integer ${className}ListCount(${ClassName}Req ${className}Req);
+    
+       
+    /**
+     * @Description:查询${functionName}分页数据
+     * 
+     * @param ${className}Req ${className}Req
+     * @return 结果
+     */
+    public List<CustomizeColumnResp> find${ClassName}List(${ClassName}Req queryReq);
+}

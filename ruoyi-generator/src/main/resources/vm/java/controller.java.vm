@@ -1,0 +1,107 @@
+package ${packageName}.controller;
+
+import java.util.List;
+import javax.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import  ${packageName}.constants.ApiConstants;
+import com.regent.bp.infrastructure.constants.BaseApiConstant;
+import com.regent.bp.infrastructure.request.PageRequest;
+import com.regent.bp.infrastructure.constants.ResponseCode;
+import com.regent.bp.infrastructure.constants.StatusConstant;
+import com.regent.bp.infrastructure.request.ModelRequest;
+import com.regent.bp.infrastructure.request.ListRequest;
+import com.regent.bp.infrastructure.model.BatchData;
+import com.regent.bp.infrastructure.response.BaseResponse;
+import com.regent.bp.infrastructure.response.BatchResponse;
+import com.regent.bp.infrastructure.response.ModelResponse;
+import com.regent.bp.infrastructure.contoller.BaseRestController;
+import org.springframework.web.bind.annotation.RestController;
+import com.regent.bp.infrastructure.response.PageResponse;
+import com.regent.bp.infrastructure.util.ResponseUtil;
+import ${packageName}.model.${ClassName};
+import ${packageName}.service.${ClassName}Service;
+import ${packageName}.resp.${ClassName}Resp;
+import ${packageName}.req.${ClassName}Req;
+import org.springframework.web.bind.annotation.ResponseBody;
+#if($table.crud)
+#elseif($table.tree)
+import com.ruoyi.common.utils.StringUtils;
+import com.ruoyi.common.core.domain.Ztree;
+#end
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import org.springframework.stereotype.Controller;
+
+/**
+ * ${functionName}Controller
+ *
+ * @author ${author}
+ * @date ${datetime}
+ */
+
+@RestController
+@RequestMapping(ApiConstants.${moduleName}+ "/" +ApiConstants.${businessName})
+@Api(tags = "${functionName}")
+public class ${ClassName}Controller extends BaseRestController {
+
+    @Autowired
+    private ${ClassName}Service ${className}Service;
+
+
+    @GetMapping(BaseApiConstant.COMMON_ITEMS)
+    @ApiOperation(value = "查询列表数据")
+    public ListResponse<${ClassName}ListResp> items() {
+        return ResponseUtil.success(${className}Service.select${ClassName}ListResp())
+    }
+
+
+    @GetMapping(BaseApiConstant.COMMON_ITEM + "/{id}")
+    @ApiOperation(value = "详情")
+    public ModelResponse<${ClassName}> item(@PathVariable(name = "id") String id) {
+        return ResponseUtil.success(${className}Service.select${ClassName}ById(id));
+    }
+
+
+    @PostMapping(BaseApiConstant.COMMON_CREATE)
+    @ApiOperation(value = "新增")
+    public BaseResponse create(@RequestBody ModelRequest<${ClassName}SaveReq> req) {
+        String ${className}Id = ${className}Service.insert${ClassName}(req.getData());
+        if(StringUtil.isEmpty(id)) {
+            return ResponseUtil.error(ResponseCode.INTERNAL_DB_ERROR, "保存出错，请联系管理员！", null);
+        }
+        return ResponseUtil.success(id);
+    }
+
+
+
+    @PutMapping(BaseApiConstant.COMMON_UPDATE)
+    @ApiOperation(value = 修改")
+    public BaseResponse update(@RequestBody ModelRequest<${ClassName}> req) {
+        String ${className}Id = ${className}Service.update${ClassName}(req.getData());
+        if(StringUtil.isEmpty(id)) {
+            return ResponseUtil.error(ResponseCode.INTERNAL_DB_ERROR, "修改出错，请联系管理员！", null);
+        }
+        return ResponseUtil.success(id);
+    }
+
+
+    @PostMapping(BaseApiConstant.COMMON_REMOVE_BATCH)
+    @ApiOperation(value = "批量删除")
+    public BatchResponse<BatchData> removeBatch(@RequestBody ListRequest<String> req) {
+        BatchData data = ${className}Service.delete${ClassName}ByIds(req.getData());
+        return ResponseUtil.success(data);
+    }
+
+
+}
+

@@ -1,0 +1,134 @@
+package ${packageName}.controller;
+
+import java.util.List;
+import javax.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import  ${packageName}.constants.ApiConstants;
+import com.regent.bp.infrastructure.constants.BaseApiConstant;
+import com.regent.bp.infrastructure.request.PageRequest;
+import com.regent.bp.infrastructure.constants.ResponseCode;
+import com.regent.bp.infrastructure.constants.StatusConstant;
+import com.regent.bp.infrastructure.request.ModelRequest;
+import com.regent.bp.infrastructure.request.ListRequest;
+import com.regent.bp.infrastructure.model.BatchData;
+import com.regent.bp.infrastructure.response.BaseResponse;
+import com.regent.bp.infrastructure.response.BatchResponse;
+import com.regent.bp.infrastructure.response.ModelResponse;
+import com.regent.bp.infrastructure.contoller.BaseRestController;
+import org.springframework.web.bind.annotation.RestController;
+import com.regent.bp.infrastructure.response.PageResponse;
+import com.regent.bp.infrastructure.util.ResponseUtil;
+import ${packageName}.model.${ClassName};
+import ${packageName}.service.${ClassName}Service;
+import ${packageName}.resp.${ClassName}Resp;
+import ${packageName}.req.${ClassName}Req;
+import org.springframework.web.bind.annotation.ResponseBody;
+#if($table.crud)
+#elseif($table.tree)
+import com.ruoyi.common.utils.StringUtils;
+import com.ruoyi.common.core.domain.Ztree;
+#end
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import org.springframework.stereotype.Controller;
+
+/**
+ * ${functionName}Controller
+ *
+ * @author ${author}
+ * @date ${datetime}
+ */
+@Api(tags = "${functionName}")
+@RestController
+##@RequestMapping(ApiConstants.INFORMATION + "/" + ApiConstants.CHANNEL)
+@RequestMapping(ApiConstants.${moduleName}+ "/" +ApiConstants.${businessName})
+public class ${ClassName}Controller extends BaseRestController {
+
+    @Autowired
+    private ${ClassName}Service ${className}Service;
+
+    @PostMapping(BaseApiConstant.COMMON_SEARCH)
+    @ApiOperation(value = "获取${functionName}分页列表}")
+    public PageResponse<${ClassName}Resp> search(@RequestBody PageRequest<${ClassName}Req> param) {
+            ${ClassName}Req ${className}Req = param.getData();
+        if (${className}Req == null) {
+                ${className}Req = new ${ClassName}Req();
+        }
+        return ${className}Service.searchPage${ClassName}(param.getPage(), param.getPageSize(), ${className}Req);
+    }
+
+
+##    /**
+##    * 导出${functionName}列表
+##    */
+##    @RequiresPermissions("${permissionPrefix}:export")
+##    @Log(title = "${functionName}", businessType = BusinessType.EXPORT)
+##    @PostMapping("/export")
+##    @ResponseBody
+##    public AjaxResult export(${ClassName} ${className})
+##        {
+##        List<${ClassName}> list = ${className}Service.select${ClassName}List(${className});
+##        ExcelUtil<${ClassName}> util = new ExcelUtil<${ClassName}>(${ClassName}.class);
+##        return util.exportExcel(list, "${businessName}");
+##        }
+
+    @PutMapping(BaseApiConstant.BATCH_CHECK)
+    @ApiOperation(value = "批量${functionName}审核")
+    public BatchResponse checkBatch(@RequestBody ListRequest<String> ids) {
+        BatchData batchData = ${className}Service.checkBatch${ClassName}(ids.getData());
+        if (batchData.getFailList().size() > 0) {
+            return ResponseUtil.error(StatusConstant.ENABLE, batchData);
+        }
+        return ResponseUtil.success(StatusConstant.DISABLE, batchData);
+    }
+
+    @PutMapping(BaseApiConstant.COMMON_BILL_CHECK + "/{id}/{status}")
+    @ApiOperation(value = "单个${functionName}审核")
+    public BaseResponse check(@PathVariable(name = "id") @ApiParam(value = "${functionName}id") String id, @PathVariable(name = "status") @ApiParam(value = "状态(0.未审核,1.已审核,2.反审核,3.已作废)") Integer status) {
+            ${className}Service.check${ClassName}(id, status);
+        return ResponseUtil.success(id);
+    }
+
+    @GetMapping(BaseApiConstant.COMMON_ITEM + "/{id}")
+    @ApiOperation(value = "获取${functionName}渠道")
+    public ModelResponse<${ClassName}SaveResp> item(@PathVariable(name = "id") String id) {
+
+            ${ClassName}SaveResp list = ${className}Service.select${ClassName}ById(id);
+        return ResponseUtil.success(list);
+    }
+
+    @ApiOperation(value = "刪除${functionName}")
+    @PostMapping(BaseApiConstant.COMMON_REMOVE_BATCH)
+    public BatchResponse remove(@RequestBody ListRequest<String> ids) {
+        BatchData batchData = ${className}Service.delete${ClassName}ByIds(ids.getData());
+        if (batchData.getFailList().size() > 0) {
+            return ResponseUtil.error(batchData);
+        }
+        return ResponseUtil.success(batchData);
+    }
+
+    @ApiOperation(value = "新增${functionName}")
+    @PostMapping(BaseApiConstant.COMMON_CREATE)
+    public BaseResponse create(@RequestBody @Valid ${ClassName}SaveReq req) {
+        String ${className}Id = ${className}Service.insert${ClassName}(req, this.getUserId());
+        return ResponseUtil.success(${className}Id);
+    }
+
+    @ApiOperation(value = "更新${functionName}")
+    @PutMapping(BaseApiConstant.COMMON_UPDATE)
+    public BaseResponse update(@RequestBody @Valid ${ClassName}SaveReq req) {
+        String ${className}Id = ${className}Service.update${ClassName}(req, this.getUserId());
+        return ResponseUtil.success(${className}Id);
+    }
+}
+
