@@ -2,14 +2,9 @@ package ${packageName}.service;
 
 import ${packageName}.model.${ClassName};
 import java.util.List;
-import ${packageName}.resp.${ClassName}Resp;
-import ${packageName}.req.${ClassName}Req;
-import com.regent.bp.common.service.BaseService;
-import com.regent.bp.infrastructure.response.PageResponse;
-import com.regent.bp.infrastructure.model.BatchData;
-#if($table.tree)
-import com.ruoyi.common.core.domain.Ztree;
-#end
+import ${packageName}.param.${ClassName}Param;
+import com.regent.rbp.common.service.BaseService;
+import com.regent.rbp.infrastructure.response.PageResponse;
 
 /**
  * @Description: ${functionName}Service接口
@@ -19,30 +14,6 @@ import com.ruoyi.common.core.domain.Ztree;
  */
 public interface ${ClassName}Service extends BaseService<${ClassName}> {
 
-    /**
-     * @Description: 查询${functionName}
-     * 
-     * @param ${pkColumn.javaField} ${functionName}ID
-     * @return ${functionName}
-     */
-    public ${ClassName} select${ClassName}ById(${pkColumn.javaType} ${pkColumn.javaField});
-
-    /**
-     * @Description: 查询${functionName}列表
-     * 
-     * @param ${className} ${functionName}
-     * @return ${functionName}集合
-     */
-    public List<${ClassName}> select${ClassName}List(${ClassName} ${className});
-
-    /**
-     * @Description: 查询${functionName}列表
-     * 
-     * 
-     * @return ${functionName}聚合数据
-     */
-    public List<${ClassName}Resp> select${ClassName}ListResp();
-    
    /**
      * @Description: 分页查询数据
      * @param  queryReq  查询实体
@@ -50,7 +21,16 @@ public interface ${ClassName}Service extends BaseService<${ClassName}> {
      * @param  pageSize  每页数量
      * @return ${functionName}
      */
-    public PageResponse<${ClassName}Resp> searchPage${ClassName}(int page, int pageSize,${ClassName}Req queryReq);
+    public PageResponse<${ClassName}> searchPageData(int page, int pageSize,${ClassName}Param queryParam);
+    
+    
+    /**
+     * @Description:查询${functionName}
+     * 
+     * @param ${pkColumn.javaField} ${functionName}ID
+     * @return 结果
+     */
+    public ${ClassName} select${ClassName}ById(${pkColumn.javaType} ${pkColumn.javaField});
     
     /**
      * @Description:  新增${functionName}
@@ -58,7 +38,7 @@ public interface ${ClassName}Service extends BaseService<${ClassName}> {
      * @param ${className} ${functionName}
      * @return 结果
      */
-    public int insert${ClassName}(${ClassName} ${className});
+    public Long insert${ClassName}(${ClassName} ${className});
 
     /**
      * @Description: 修改${functionName}
@@ -66,7 +46,7 @@ public interface ${ClassName}Service extends BaseService<${ClassName}> {
      * @param ${className} ${functionName}
      * @return 结果
      */
-    public int update${ClassName}(${ClassName} ${className});
+    public Long update${ClassName}(${ClassName} ${className});
 
 
     /**
@@ -83,14 +63,6 @@ public interface ${ClassName}Service extends BaseService<${ClassName}> {
      * @param ${pkColumn.javaField} ${functionName}ID
      * @return 结果
      */
-    public BatchData delete${ClassName}ByIds(List<String> ids);
-#if($table.tree)
+    public int delete${ClassName}ByIds(List<Long> ids);
 
-    /**
-     * @Description: 查询${functionName}树列表
-     * 
-     * @return 所有${functionName}信息
-     */
-    public List<Ztree> select${ClassName}Tree();
-#end
 }

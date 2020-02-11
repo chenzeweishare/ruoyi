@@ -1,11 +1,10 @@
 package ${packageName}.model;
 
 import java.util.Date;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import com.regent.bp.common.model.BaseModel;
+import com.regent.rbp.common.model.MasterModel;
 
 /**
  * ${functionName}对象 ${tableName}
@@ -15,7 +14,7 @@ import com.regent.bp.common.model.BaseModel;
  */
 @Data
 @ApiModel(description="${functionName}")
-public class ${ClassName} extends BaseModel<${ClassName}>{
+public class ${ClassName} extends MasterModel<${ClassName}>{
 #foreach ($column in $columns)
 #if(!$table.isSuperColumn($column.javaField))
 

@@ -1,0 +1,21 @@
+package ${packageName}.param;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+import ${packageName}.model.${ClassName};
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import ${packageName}.model.${ClassName};
+
+/**
+ * @Description: ${functionName}查询参数实体
+ * 
+ * @author ${author}
+ * @date ${datetime}
+ */
+@Data
+public class ${ClassName}Param{
+
+   @ApiModelProperty(notes="${functionName}")
+   private ${ClassName} ${ClassName};
+
+}

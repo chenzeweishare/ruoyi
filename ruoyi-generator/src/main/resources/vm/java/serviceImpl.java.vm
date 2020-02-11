@@ -1,27 +1,18 @@
 package ${packageName}.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.regent.bp.infrastructure.util.StringUtil;
-import com.regent.bp.common.service.impl.BaseServiceImpl;
-import com.regent.bp.infrastructure.model.BatchData;
-import com.regent.bp.infrastructure.model.FailData;
-import com.regent.bp.infrastructure.response.PageResponse;
-import com.regent.bp.infrastructure.util.PageUtil;
-import com.regent.bp.infrastructure.util.ResponseUtil;
-import com.regent.bp.infrastructure.util.StringUtil;
-import ${packageName}.resp.${ClassName}Resp;
-import ${packageName}.req.${ClassName}Req;
-#foreach ($column in $columns)
-#if($column.javaField == 'createTime' || $column.javaField == 'updateTime')
-#break
-#end
-#end
-import ${packageName}.dao.${ClassName}Dao;
-import ${packageName}.model.${ClassName};
-import ${packageName}.service.${ClassName}Service;
+
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.regent.rbp.common.service.impl.BaseServiceImpl;
+import com.regent.rbp.information.dao.${ClassName}Dao;
+import com.regent.rbp.information.model.${ClassName};
+import com.regent.rbp.information.param.${ClassName}Param;
+import com.regent.rbp.information.service.${ClassName}Service;
+import com.regent.rbp.infrastructure.response.PageResponse;
 
 /**
  * ${functionName}Service业务层处理
@@ -34,6 +25,22 @@ public class ${ClassName}ServiceImpl extends BaseServiceImpl<${ClassName}Dao, ${
 
     @Autowired
     private ${ClassName}Dao ${className}Dao;
+    
+    /**
+     * @Description: 分页查询数据
+     * 
+     * @param  queryReq  查询实体
+     * @param  page  页数
+     * @param  pageSize  每页数量
+     * @return ${functionName}
+     */
+    public PageResponse<${ClassName}> searchPageData (int page,int pageSize,${ClassName}Param queryParam){
+    	
+    	Page<${ClassName}> pageModel = new Page<${ClassName}>(page,pageSize);
+        IPage<${ClassName}> pages = ${className}Dao.searchPageData(pageModel, queryParam);
+        PageResponse<${ClassName}> pageData = new PageResponse<${ClassName}>(pages.getTotal(), pageSize, pages.getRecords());
+		return pageData;
+    }
 
     /**
      * @Description:  根据ID查询${functionName}
@@ -43,38 +50,9 @@ public class ${ClassName}ServiceImpl extends BaseServiceImpl<${ClassName}Dao, ${
      */
     @Override
     public ${ClassName} select${ClassName}ById(${pkColumn.javaType} ${pkColumn.javaField}) {
-        return ${className}Dao.select${ClassName}ById(${pkColumn.javaField});
+        return null;
     }
-
-    /**
-     * @Description: 查询${functionName}列表
-     * 
-     * @param ${className} ${functionName}
-     * @return ${functionName}
-     */
-    @Override
-    public List<${ClassName}> select${ClassName}List(${ClassName} ${className}) {
-        return ${className}Dao.select${ClassName}List(${className});
-    }
-
-   /**
-     * @Description: 分页查询数据
-     * 
-     * @param  queryReq  查询实体
-     * @param  page  页数
-     * @param  pageSize  每页数量
-     * @return ${functionName}
-     */
-    public PageResponse<${ClassName}Resp> searchPage${ClassName}(int page,int pageSize,${ClassName}Req queryReq){
-    	    Integer total = ${className}Dao.${className}ListCount(queryReq);
-	        int offset = PageUtil.getOffset(page, pageSize, total);
-	        int end = PageUtil.getEnd(page, pageSize, total);
-	        queryReq.setOffset(offset);
-	        queryReq.setEnd(end);
-	        List<${ClassName}Resp> ${className}List =  ${className}Dao.find${ClassName}List(queryReq);
-	        PageResponse<${ClassName}Resp> success = ResponseUtil.success(total, pageSize, ${className}List);
-	        return success;
-    }
+    
     /**
      * @Description: 新增${functionName}
      * 
@@ -82,14 +60,8 @@ public class ${ClassName}ServiceImpl extends BaseServiceImpl<${ClassName}Dao, ${
      * @return 结果
      */
     @Override
-    public int insert${ClassName}(${ClassName} ${className}) {
-#foreach ($column in $columns)
-#if($column.javaField == 'createTime')
-        ${className}.setCreateTime(DateUtils.getNowDate());
-#end
-#end    
-		${className}.preInsert();
-        return ${className}Dao.insert${ClassName}(${className});
+    public Long insert${ClassName}(${ClassName} ${className}) {
+		return 0L;
     }
 
     /**
@@ -99,14 +71,9 @@ public class ${ClassName}ServiceImpl extends BaseServiceImpl<${ClassName}Dao, ${
      * @return 结果
      */
     @Override
-    public int update${ClassName}(${ClassName} ${className}) {
-#foreach ($column in $columns)
-#if($column.javaField == 'updateTime')
-        ${className}.setUpdateTime(DateUtils.getNowDate());
-#end
-#end
-		${className}.preUpdata();
-        return ${className}Dao.update${ClassName}(${className});
+    public Long update${ClassName}(${ClassName} ${className}) {
+     
+     return 0L;
     }
 
     /**
@@ -117,67 +84,17 @@ public class ${ClassName}ServiceImpl extends BaseServiceImpl<${ClassName}Dao, ${
      */
     @Override
     public int delete${ClassName}ById(${pkColumn.javaType} ${pkColumn.javaField}) {
-        return ${className}Dao.delete${ClassName}ById(${pkColumn.javaField});
+        
+        return 0;
     }
     /**
      * @Description:  批量删除
      * 
-     * 
      * @return 结果
      */
     @Override
-    public BatchData delete${ClassName}ByIds(List<String> ids){
-        BatchData batchData = new BatchData();
-        List<String> succcessList = new ArrayList<>();
-        List<FailData> failList = new ArrayList<>();
-        for (String id : ids) {
-        try {
-               //删除信息
-              Integer integer = ${className}Dao.delete${ClassName}ById(${pkColumn.javaField});
-           	  if(integer > 0){
-                succcessList.add(id);
-              }
-           }catch (Exception e) {
-                FailData failData = new FailData();
-                failData.setId(id);
-                failData.setMessage(e.getMessage());
-                failList.add(failData);
-                e.printStackTrace();
-            }
-        }
-        batchData.setFailList(failList);
-        batchData.setSucccessList(succcessList);
-        return batchData;
+    public int delete${ClassName}ByIds(List<Long> ids){
+       
+        return 0;
     }
-    @Override
-	public List<CustomizeColumnResp> selectCustomizeColumnListResp() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-#if($table.tree)
-
-    /**
-     * @Description: 查询${functionName}树列表
-     * 
-     * @return 所有${functionName}信息
-     */
-    @Override
-    public List<Ztree> select${ClassName}Tree() {
-        List<${ClassName}> ${className}List = ${className}Dao.select${ClassName}List(new ${ClassName}());
-        List<Ztree> ztrees = new ArrayList<Ztree>();
-        for (${ClassName} ${className} : ${className}List)
-        {
-            Ztree ztree = new Ztree();
-#set($TreeCode=$treeCode.substring(0,1).toUpperCase() + ${treeCode.substring(1)})
-#set($TreeParentCode=$treeParentCode.substring(0,1).toUpperCase() + ${treeParentCode.substring(1)})
-#set($TreeName=$treeName.substring(0,1).toUpperCase() + ${treeName.substring(1)})
-            ztree.setId(${className}.get${TreeCode}());
-            ztree.setpId(${className}.get${TreeParentCode}());
-            ztree.setName(${className}.get${TreeName}());
-            ztree.setTitle(${className}.get${TreeName}());
-            ztrees.add(ztree);
-        }
-        return ztrees;
-    }
-#end
 }
