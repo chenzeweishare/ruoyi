@@ -16,7 +16,7 @@ import com.regent.rbp.infrastructure.response.PageResponse;
 
 /**
  * ${functionName}Service业务层处理
- * 
+ *
  * @author ${author}
  * @date ${datetime}
  */
@@ -25,76 +25,79 @@ public class ${ClassName}ServiceImpl extends BaseServiceImpl<${ClassName}Dao, ${
 
     @Autowired
     private ${ClassName}Dao ${className}Dao;
-    
+
     /**
      * @Description: 分页查询数据
-     * 
+     *
      * @param  queryReq  查询实体
      * @param  page  页数
      * @param  pageSize  每页数量
      * @return ${functionName}
      */
     public PageResponse<${ClassName}> searchPageData (int page,int pageSize,${ClassName}Param queryParam){
-    	
-    	Page<${ClassName}> pageModel = new Page<${ClassName}>(page,pageSize);
+
+        Page<${ClassName}> pageModel = new Page<${ClassName}>(page,pageSize);
         IPage<${ClassName}> pages = ${className}Dao.searchPageData(pageModel, queryParam);
         PageResponse<${ClassName}> pageData = new PageResponse<${ClassName}>(pages.getTotal(), pageSize, pages.getRecords());
-		return pageData;
+        return pageData;
     }
 
     /**
      * @Description:  根据ID查询${functionName}
-     * 
+     *
      * @param ${pkColumn.javaField} ${functionName}ID
      * @return ${functionName}
      */
     @Override
     public ${ClassName} select${ClassName}ById(${pkColumn.javaType} ${pkColumn.javaField}) {
-        return null;
+        return  ${className}Dao.selectById(id);
     }
-    
+
     /**
      * @Description: 新增${functionName}
-     * 
+     *
      * @param ${className} ${functionName}
      * @return 结果
      */
     @Override
     public Long insert${ClassName}(${ClassName} ${className}) {
-		return 0L;
+        Long id = getId();
+        ${className}.setId(id);
+        ${className}.preInsert();
+            ${className}Dao.insert(${className});
+        return id;
     }
 
     /**
      * @Description: 修改${functionName}
-     * 
+     *
      * @param ${className} ${functionName}
      * @return 结果
      */
     @Override
     public Long update${ClassName}(${ClassName} ${className}) {
-     
-     return 0L;
+        ${className}.preUpdata();
+            ${className}Dao.updateById(${className});
+        return  ${className}.getId();
     }
 
     /**
      * @Description:  删除${functionName}信息
-     * 
+     *
      * @param ${pkColumn.javaField} ${functionName}ID
      * @return 结果
      */
     @Override
     public int delete${ClassName}ById(${pkColumn.javaType} ${pkColumn.javaField}) {
-        
-        return 0;
+        return  ${className}Dao.deleteById(id);
     }
     /**
      * @Description:  批量删除
-     * 
+     *
      * @return 结果
      */
     @Override
     public int delete${ClassName}ByIds(List<Long> ids){
-       
-        return 0;
+        return  ${className}Dao.deleteBatchIds(ids);
     }
 }
