@@ -22,7 +22,7 @@ public interface ${ClassName}Dao  extends BaseDao<${ClassName}> {
 
    /** 
 	 * @param page 分页信息
-	 * @param queryReq 查询条件
+	 * @param queryParam 查询条件
 	 * @return
 	 */
 	IPage<${ClassName}> searchPageData(@Param("page") Page<${ClassName}> page, @Param("query") ${ClassName}Param queryParam);

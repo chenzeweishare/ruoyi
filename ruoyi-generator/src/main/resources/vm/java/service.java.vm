@@ -16,14 +16,22 @@ public interface ${ClassName}Service extends BaseService<${ClassName}> {
 
    /**
      * @Description: 分页查询数据
-     * @param  queryReq  查询实体
+     * @param  queryParam  查询实体
      * @param  page  页数
      * @param  pageSize  每页数量
      * @return ${functionName}
      */
     public PageResponse<${ClassName}> searchPageData(int page, int pageSize,${ClassName}Param queryParam);
-    
-    
+
+
+    /**
+   * @Description: 查询列表数据
+   *
+   * @param name
+   * @return
+   */
+    public List<${ClassName}> searchListData(String name);
+
     /**
      * @Description:查询${functionName}
      * 

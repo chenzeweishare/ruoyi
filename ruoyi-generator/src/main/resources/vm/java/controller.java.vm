@@ -24,6 +24,8 @@ import com.regent.rbp.infrastructure.util.ResponseUtil;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * ${functionName}Controller
@@ -33,7 +35,7 @@ import io.swagger.annotations.ApiOperation;
  */
 
 @RestController
-@RequestMapping(ApiConstants.${moduleName}+ "/" +ApiConstants.${businessName})
+@RequestMapping(ApiConstants.INFORMATION+ "/" + ApiConstants.${CLASSNAME})
 @Api(tags = "${functionName}")
 public class ${ClassName}Controller extends BaseRestController {
 
@@ -42,13 +44,19 @@ public class ${ClassName}Controller extends BaseRestController {
 
 
     @PostMapping(BaseApiConstant.COMMON_PAGE)
-    @ApiOperation(value = "查询列表数据")
-    public PageResponse<${ClassName}> search(@RequestBody PageRequest<${ClassName}Param> param ) {
+    @ApiOperation(value = "分页查询列表数据")
+    public PageResponse<${ClassName}> searchPageData(@RequestBody PageRequest<${ClassName}Param> param ) {
         return ${className}Service.searchPageData(param.getPage(), param.getPageSize(),param.getData());
     }
-    
 
-    @GetMapping(BaseApiConstant.COMMON_ITEM + "/{id}")
+
+    @PostMapping(BaseApiConstant.COMMON_LIST)
+    @ApiOperation(value = "查询列表数据")
+    public ListResponse<${ClassName}> searchData(@RequestBody ModelRequest<String> req) {
+        return ResponseUtil.success(${className}Service.searchListData(req.getData()));
+    }
+
+    @GetMapping("/{id}")
     @ApiOperation(value = "详情")
     public ModelResponse<${ClassName}> item(@PathVariable(name = "id") Long id) {
         return ResponseUtil.success(${className}Service.select${ClassName}ById(id));

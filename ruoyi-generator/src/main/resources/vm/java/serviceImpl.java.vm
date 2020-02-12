@@ -29,18 +29,31 @@ public class ${ClassName}ServiceImpl extends BaseServiceImpl<${ClassName}Dao, ${
     /**
      * @Description: 分页查询数据
      *
-     * @param  queryReq  查询实体
+     * @param  queryParam  查询实体
      * @param  page  页数
      * @param  pageSize  每页数量
      * @return ${functionName}
      */
     public PageResponse<${ClassName}> searchPageData (int page,int pageSize,${ClassName}Param queryParam){
-
         Page<${ClassName}> pageModel = new Page<${ClassName}>(page,pageSize);
         IPage<${ClassName}> pages = ${className}Dao.searchPageData(pageModel, queryParam);
-        PageResponse<${ClassName}> pageData = new PageResponse<${ClassName}>(pages.getTotal(), pageSize, pages.getRecords());
-        return pageData;
+        return new PageResponse<${ClassName}>(pages.getTotal(), pageSize, pages.getRecords());
     }
+
+    /**
+   * @Description: 查询列表数据
+   *
+   * @param name
+   * @return
+   */
+    @Override
+    public List<${ClassName}> searchListData(String name) {
+        if (StringUtil.isEmpty(name)) {
+            return ${className}Dao.selectList(new QueryWrapper<>());
+        }
+        return ${className}Dao.selectList(new QueryWrapper<${ClassName}>().like("name", name));
+    }
+
 
     /**
      * @Description:  根据ID查询${functionName}
@@ -64,7 +77,7 @@ public class ${ClassName}ServiceImpl extends BaseServiceImpl<${ClassName}Dao, ${
         Long id = getId();
         ${className}.setId(id);
         ${className}.preInsert();
-            ${className}Dao.insert(${className});
+        ${className}Dao.insert(${className});
         return id;
     }
 
@@ -77,7 +90,7 @@ public class ${ClassName}ServiceImpl extends BaseServiceImpl<${ClassName}Dao, ${
     @Override
     public Long update${ClassName}(${ClassName} ${className}) {
         ${className}.preUpdata();
-            ${className}Dao.updateById(${className});
+        ${className}Dao.updateById(${className});
         return  ${className}.getId();
     }
 
