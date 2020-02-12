@@ -16,6 +16,6 @@ import ${packageName}.model.${ClassName};
 public class ${ClassName}Param{
 
    @ApiModelProperty(notes="${functionName}")
-   private ${ClassName} ${ClassName};
+   private ${ClassName} ${className};
 
 }
