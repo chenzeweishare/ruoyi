@@ -183,9 +183,9 @@ public class VelocityUtils
         {
             fileName = businessName + "Menu.sql";
         }else if(template.contains("param.vm")) {
-            fileName = StringUtils.format("{}/req/{}Req.java", javaPath, className);
+            fileName = StringUtils.format("{}/req/{}Param.java", javaPath, className);
         }else if(template.contains("dto.vm")) {
-            fileName = StringUtils.format("{}/resp/{}Resp.java", javaPath, className);
+            fileName = StringUtils.format("{}/resp/{}Dto.java", javaPath, className);
         }/*else if(template.contains("saveReq.vm")) {
             fileName = StringUtils.format("{}/req/{}saveReq.java", javaPath, className);
         }else if(template.contains("listResp.vm")) {
