@@ -12,9 +12,9 @@ import ${packageName}.model.${ClassName};
  * @date ${datetime}
  */
 @Data
-public class ${ClassName}Dto extends ${ClassName}{
+public class ${ClassName}Dto{
 
    @ApiModelProperty(notes="${functionName}")
-   private ${ClassName} ${ClassName};
+   private ${ClassName} ${className};
 
 }
