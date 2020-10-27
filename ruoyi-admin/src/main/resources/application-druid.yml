@@ -6,9 +6,9 @@ spring:
         druid:
             # 主库数据源
             master:
-                url: jdbc:mysql://192.168.8.67:3306/rbp-generator?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
-                username: root
-                password: regentsoftrbp
+                url: jdbc:mysql://10.8.250.100:11036/escm-ruoyi?useUnicode=true&characterEncoding=utf-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+                username: escm-update-user
+                password: Efn@escm.88**!!appsuper
             # 从库数据源
             slave:
                 # 从数据源开关/默认关闭

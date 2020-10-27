@@ -78,7 +78,7 @@ public class ${ClassName}Controller extends BaseRestController {
     @PutMapping(BaseApiConstant.COMMON_UPDATE)
     @ApiOperation(value = "修改")
     public BaseResponse update(@RequestBody ModelRequest<${ClassName}> ${className}) {
-        Long id = ${className}Service.insert${ClassName}(${className}.getData());
+        Long id = ${className}Service.update${ClassName}(${className}.getData());
         if(null == id) {
             return ResponseUtil.error(ResponseCode.INTERNAL_DB_ERROR, "保存出错，请联系管理员！", null);
         }
