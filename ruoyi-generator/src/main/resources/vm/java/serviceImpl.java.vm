@@ -89,7 +89,7 @@ public class ${ClassName}ServiceImpl extends BaseServiceImpl<${ClassName}Dao, ${
      */
     @Override
     public Long update${ClassName}(${ClassName} ${className}) {
-        ${className}.preUpdata();
+        ${className}.preUpdate();
         ${className}Dao.updateById(${className});
         return  ${className}.getId();
     }
