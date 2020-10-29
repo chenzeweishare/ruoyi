@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.regent.rbp.information.model.${ClassName};
-import com.regent.rbp.information.param.${ClassName}Param;
-import com.regent.rbp.information.service.${ClassName}Service;
+import com.escm.information.model.${ClassName};
+import com.escm.information.param.${ClassName}Param;
+import com.escm.information.service.${ClassName}Service;
 import com.regent.rbp.infrastructure.constants.BaseApiConstant;
 import com.regent.rbp.infrastructure.constants.ResponseCode;
 import com.regent.rbp.infrastructure.contoller.BaseRestController;

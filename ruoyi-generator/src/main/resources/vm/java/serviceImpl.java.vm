@@ -8,10 +8,10 @@ import org.springframework.stereotype.Service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.regent.rbp.common.service.impl.BaseServiceImpl;
-import com.regent.rbp.information.dao.${ClassName}Dao;
-import com.regent.rbp.information.model.${ClassName};
-import com.regent.rbp.information.param.${ClassName}Param;
-import com.regent.rbp.information.service.${ClassName}Service;
+import com.escm.information.dao.${ClassName}Dao;
+import com.escm.information.model.${ClassName};
+import com.escm.information.param.${ClassName}Param;
+import com.escm.information.service.${ClassName}Service;
 import com.regent.rbp.infrastructure.response.PageResponse;
 
 /**
